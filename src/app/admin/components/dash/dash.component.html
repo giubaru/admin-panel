@@ -3,7 +3,7 @@
     <mat-icon>refresh</mat-icon>
   </button>
   <h1 class="mat-h1 inline">Dashboard</h1>
-  <mat-grid-list cols="3" rowHeight="350px">
+  <mat-grid-list cols="3" rowHeight="200px">
     <mat-grid-tile *ngFor="let card of cards | async" [colspan]="1" [rowspan]="1">
       <mat-card class="dashboard-card">
         <mat-card-header [ngSwitch]="card.status">
@@ -26,6 +26,10 @@
             <i>{{ card.status }}</i>
           </div>
         </mat-card-content>
+        <mat-card-actions style="text-align: center;">
+          <button mat-icon-button *ngIf="card.status === 'running'"><mat-icon>stop</mat-icon></button>
+          <button mat-icon-button *ngIf="card.status === 'stopped'"><mat-icon>play_arrow</mat-icon></button>
+        </mat-card-actions>
       </mat-card>
     </mat-grid-tile>
   </mat-grid-list>
