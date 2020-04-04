@@ -1,11 +1,16 @@
 <div class="grid-container">
-  <h1 class="mat-h1">Dashboard</h1>
-  <mat-grid-list cols="2" rowHeight="350px">
-    <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">
+  <button mat-icon-button class="refresh-icon" (click)="refreshDash()">
+    <mat-icon>refresh</mat-icon>
+  </button>
+  <h1 class="mat-h1 inline">Dashboard</h1>
+  <mat-grid-list cols="3" rowHeight="350px">
+    <mat-grid-tile *ngFor="let card of cards | async" [colspan]="1" [rowspan]="1">
       <mat-card class="dashboard-card">
-        <mat-card-header>
+        <mat-card-header [ngSwitch]="card.status">
+          <mat-icon *ngSwitchCase="'running'" mat-card-avatar color="primary">check_circle</mat-icon>
+          <mat-icon *ngSwitchCase="'stopped'" mat-card-avatar color="warn">error</mat-icon>
           <mat-card-title>
-            {{card.title}}
+            {{card.name}}
             <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
               <mat-icon>more_vert</mat-icon>
             </button>
@@ -13,10 +18,13 @@
               <button mat-menu-item>Expand</button>
               <button mat-menu-item>Remove</button>
             </mat-menu>
-          </mat-card-title>
+          </mat-card-title> 
         </mat-card-header>
         <mat-card-content class="dashboard-card-content">
-          <div>Card Content Here</div>
+          <div>
+            Card Content Here<br>
+            <i>{{ card.status }}</i>
+          </div>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>
